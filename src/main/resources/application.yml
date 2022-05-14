@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5435/chat?user=user&password=secret
+    username: user
+    password: secret
+  liquibase:
+    change-log: /db/changelog/changelog.yml
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate

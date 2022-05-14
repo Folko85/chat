@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  postgres:
+    container_name: postgres_chat
+    image: "postgres:14"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: chat
+    ports:
+      - "5435:5432"

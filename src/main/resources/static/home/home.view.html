@@ -1,0 +1,10 @@
+﻿<h1>Привет {{vm.user.firstname}}!</h1>
+<p>Ты вошёл в чат!!</p>
+<ul>
+    <li ng-repeat="user in vm.allUsers">
+        {{user.username}} ({{user.firstname}} {{user.lastname}})
+        - <a ng-click="vm.deleteUser(user.id)">Delete</a>
+    </li>
+</ul>
+<p>&nbsp;</p>
+<p><a href="#!/login" class="btn btn-primary">Logout</a></p>
