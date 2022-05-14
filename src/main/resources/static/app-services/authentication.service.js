@@ -10,19 +10,18 @@
     function AuthenticationService($http) {
         var service = {};
 
-        service.Login = Login;
+        service.login = login;
+        service.logout = logout;
 
         return service;
 
-        function Login(username, password) {
+        function login(username, password) {
             return $http.post('/api/users/login', {username: username, password: password});
         }
 
 
-        function Logout() {
-            // remove user from local storage and clear http auth header
-            delete $localStorage.currentUser;
-            $http.defaults.headers.common.Authorization = '';
+        function logout() {
+            return $http.get('/api/users/logout');
         }
 
     }

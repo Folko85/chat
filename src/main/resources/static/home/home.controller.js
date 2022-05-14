@@ -5,14 +5,15 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['UserService'];
+    HomeController.$inject = ['UserService', 'AuthenticationService', 'FlashService'];
 
-    function HomeController(UserService) {
+    function HomeController(UserService, AuthenticationService, FlashService) {
         var vm = this;
 
         vm.user = null;
         vm.allUsers = [];
-        vm.deleteUser = deleteUser;
+
+        vm.logout = logout;
 
         initController();
 
@@ -28,19 +29,15 @@
                 });
         }
 
-        function loadAllUsers() {
-            UserService.GetAll()
-                .then(function (users) {
-                    vm.allUsers = users;
-                });
+        function logout() {
+            const promise = AuthenticationService.logout();
+            promise.then(response => {
+                FlashService.Success(response.data.message, true);
+                localStorage.removeItem('currentUser');
+                document.location.href = "/";
+            }).catch(error => FlashService.Error(error));
         }
 
-        function deleteUser(id) {
-            UserService.Delete(id)
-                .then(function () {
-                    loadAllUsers();
-                });
-        }
     }
 
 })();

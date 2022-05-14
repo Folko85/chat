@@ -3,8 +3,12 @@
 <ul>
     <li ng-repeat="user in vm.allUsers">
         {{user.username}} ({{user.firstname}} {{user.lastname}})
-        - <a ng-click="vm.deleteUser(user.id)">Delete</a>
     </li>
 </ul>
-<p>&nbsp;</p>
-<p><a href="#!/login" class="btn btn-primary">Logout</a></p>
+<p> Тут будет какой-то важный текст заданного размера&nbsp;</p>
+
+<form name="form" ng-submit="vm.logout()" role="form">
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Выход</button>
+    </div>
+</form>

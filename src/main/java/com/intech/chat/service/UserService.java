@@ -31,20 +31,20 @@ public class UserService {
         String token;
         if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             token = jwtProvider.generateToken(loginRequest.getUsername());
-        } else throw new UsernameNotFoundException(loginRequest.getUsername());
+        } else throw new UsernameNotFoundException("Неверный пароль");
 
         return new LoginResponse().setUsername(user.getUsername()).setToken(token);
 
     }
 
-    public String logout() {
+    public SuccessResponse logout() {
         SecurityContextHolder.clearContext();
-        return "All OK";
+        return new SuccessResponse().setMessage("Вы вышли из чата");
     }
 
     public SuccessResponse register(RegisterRequest registerRequest) throws UserExistException {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent())
-            throw new UserExistException();
+            throw new UserExistException("Пользователь с таким никнеймом уже есть");
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
         User user = new User().setFirstname(registerRequest.getFirstname()).setLastname(registerRequest.getLastname())
                 .setUsername(registerRequest.getUsername()).setPassword(passwordEncoder.encode(registerRequest.getPassword()))

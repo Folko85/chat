@@ -31,7 +31,6 @@ public class UserController {
     @PostMapping("/register")
     @Operation(summary = "Регистрация")
     public SuccessResponse register(@RequestBody RegisterRequest registerRequest) throws UserExistException {
-        log.info(String.valueOf(registerRequest));
         return userService.register(registerRequest);
     }
 
@@ -42,15 +41,14 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Данные пользователя")
-    public ProfileResponse getProfile(@PathVariable String username){
+    public ProfileResponse getProfile(@PathVariable String username) {
         return userService.getProfile(username);
     }
 
     @GetMapping("/logout")
-    @Operation(summary = "logout")
-    public String logout() {
+    @Operation(summary = "Выход")
+    public SuccessResponse logout() {
         return userService.logout();
     }
 }

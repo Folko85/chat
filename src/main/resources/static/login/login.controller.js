@@ -12,26 +12,19 @@
 
         vm.login = login;
 
-        function initController() {
-            AuthenticationService.Logout();
-        }
-
         function login() {
-            const promise = AuthenticationService.Login(vm.username, vm.password)
-            promise.then(handle).catch(console.error)
+            const promise = AuthenticationService.login(vm.username, vm.password);
+            promise.then(response => handle(response))
+                .catch(error => FlashService.Error(error.data.error_description));
         }
 
         function handle(response) {
-            if (response.data.token) {
-                // store username and token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify({
-                    token: response.data.token,
-                    username: response.data.username
-                }));
-                document.location.href = "/";
-            } else {
-                FlashService.Error(response.message);
-            }
+            // store username and token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify({
+                token: response.data.token,
+                username: response.data.username
+            }));
+            document.location.href = "/";
         }
 
     }
