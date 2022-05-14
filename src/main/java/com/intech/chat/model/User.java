@@ -1,5 +1,6 @@
 package com.intech.chat.model;
 
+import com.intech.chat.model.enums.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -38,12 +37,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        if (this.id == 1) {
-            roles.add(Role.MODERATOR);
-        }
-        return roles;
+        return this.getRole().getAuthorities();
     }
 
     @Override

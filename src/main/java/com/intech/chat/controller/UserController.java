@@ -41,6 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
+    @PreAuthorize("hasAuthority('user:write')")
     @Operation(summary = "Данные пользователя")
     public ProfileResponse getProfile(@PathVariable String username) {
         return userService.getProfile(username);

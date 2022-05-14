@@ -5,7 +5,15 @@
         {{user.username}} ({{user.firstname}} {{user.lastname}})
     </li>
 </ul>
-<p> Тут будет какой-то важный текст заданного размера&nbsp;</p>
+<section class="messages-and-users">
+    <div class="messages-list">
+        <i>Сообщений нет</i>
+    </div>
+</section>
+<section class="controls">
+    <textarea class="new-message"></textarea>
+    <button class="send-message">Отправить</button>
+</section>
 
 <form name="form" ng-submit="vm.logout()" role="form">
     <div class="form-actions">
