@@ -86,6 +86,18 @@
                 $('.messages-list').append(element);
                 const block = document.getElementById("messages");
                 block.scrollTop = block.scrollHeight;
+            } else if (message.type === "JOIN") {
+                let textElement = $('<div class="username"></div>');
+                textElement.text("К нам присоединился " + message.sender);
+                $('.messages-list').append(textElement);
+                const block = document.getElementById("messages");
+                block.scrollTop = block.scrollHeight;
+            } else if (message.type === "LEAVE"){
+                let textElement = $('<div class="username"></div>');
+                textElement.text("Нас покинул " + message.sender);
+                $('.messages-list').append(textElement);
+                const block = document.getElementById("messages");
+                block.scrollTop = block.scrollHeight;
             }
         }
 
