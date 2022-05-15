@@ -15,6 +15,7 @@
 
         vm.logout = logout;
 
+
         initController();
 
         function initController() {
@@ -40,37 +41,6 @@
             }).catch(error => FlashService.Error(error));
         }
 
-
-        // function getMessageElement(message) {
-        //     let item = $('<div class="message-item"></div>');
-        //     let header = $('<div class="message-header"></div>');
-        //     header.append($('<div class="datetime">' +
-        //         message.dateTime + '</div>'));
-        //     header.append($('<div class="username">' +
-        //         message.username + '</div>'));
-        //     let textElement = $('<div class="message-text"></div>');
-        //     textElement.text(message.text);
-        //     item.append(header, textElement);
-        //     return item;
-        // }
-
-        // function updateMessages() {
-        //     const promise = MessageService.GetMessages();
-        //     promise.then(response => {
-        //         const messages = response.data;
-        //         if (messages.length === 0) {
-        //             return;
-        //         }
-        //         $('.messages-list').html('');
-        //         messages.forEach(message => {
-        //             const element = getMessageElement(message);
-        //             $('.messages-list').append(element);
-        //         });
-        //         const block = document.getElementById("messages");
-        //         block.scrollTop = block.scrollHeight;
-        //     }).catch(error => FlashService.Error(error))
-        // }
-
         function initApplication() {
             $('.messages-and-users').css({display: 'flex'});
             $('.controls').css({display: 'flex'});
@@ -87,14 +57,8 @@
             $('.send-message').on('click', function () {
                 let message = $('.new-message').val();
                 SocketService.sendMessage(message)
-                // const promise = MessageService.AddMessages(message);
-
-                // promise.then(() => {
-                //     $('.new-message').val('');
-                // }).catch(error => FlashService.Error(error))
             });
 
-            // setInterval(updateMessages, 1000);
         }
 
     }
