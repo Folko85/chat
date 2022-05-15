@@ -9,6 +9,9 @@
     config.$inject = ['$routeProvider'];
 
     function config($routeProvider) {
+        const PORT = process.env.port || '8080';
+        app.set("port", PORT);
+        
         $routeProvider
             .when('/', {
                 controller: 'HomeController',
