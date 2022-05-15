@@ -5,6 +5,7 @@ import com.intech.chat.dto.response.MessageResponse;
 import com.intech.chat.dto.response.SuccessResponse;
 import com.intech.chat.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,14 +28,14 @@ public class MessageController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('user:write')")
-    @Operation(summary = "Получить все сообщения")
+    @Operation(summary = "Получить все сообщения", security = @SecurityRequirement(name = "jwt"))
     public List<MessageResponse> getAll() {
         return messageService.getAll();
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('user:write')")
-    @Operation(summary = "Добавить сообщение")
+    @Operation(summary = "Добавить сообщение", security = @SecurityRequirement(name = "jwt"))
     public SuccessResponse add(@RequestBody MessageRequest messageRequest, Principal principal) {
         return messageService.add(messageRequest, principal);
     }

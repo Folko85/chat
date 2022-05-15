@@ -8,6 +8,7 @@ import com.intech.chat.dto.response.SuccessResponse;
 import com.intech.chat.exception.UserExistException;
 import com.intech.chat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     @PreAuthorize("hasAuthority('user:write')")
-    @Operation(summary = "Данные пользователя")
+    @Operation(summary = "Данные пользователя", security = @SecurityRequirement(name = "jwt"))
     public ProfileResponse getProfile(@PathVariable String username) {
         return userService.getProfile(username);
     }
