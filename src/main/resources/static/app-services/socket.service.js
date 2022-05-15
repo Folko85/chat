@@ -5,9 +5,9 @@
         .module('app')
         .factory('SocketService', SocketService);
 
-    SocketService.$inject = ['$rootScope'];
+    SocketService.$inject = ['FlashService'];
 
-    function SocketService($rootScope) {
+    function SocketService(FlashService) {
         var service = {};
 
         service.connect = connect;
@@ -15,32 +15,24 @@
         service.onError = onError;
         service.sendMessage = sendMessage;
         service.onMessageReceived = onMessageReceived;
-        service.getAvatarColor = getAvatarColor;
 
         return service;
-
-        var messageInput = document.querySelector('#message');
-        var connectingElement = document.querySelector('.connecting');
 
         var stompClient = null;
         var username = null;
 
-        var colors = [
-            '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-            '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-        ];
+        // var colors = [
+        //     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+        //     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+        // ];
 
-        function connect() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            username = currentUser.username;
-
-            if (username) {
-                var socket = new SockJS('/ws');
+        function connect(currentUser) {
+            if (currentUser.username) {
+                username = currentUser.username;
+                const socket = new SockJS('/ws');
                 stompClient = Stomp.over(socket);
-
                 stompClient.connect({}, onConnected, onError);
             }
-            console.log("Что-то видимо вышло, хз")
         }
 
 
@@ -56,31 +48,27 @@
         }
 
 
-        function onError(error) {
-            connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-            connectingElement.style.color = 'red';
+        function onError() {
+            FlashService.Error('Не вышло подключиться. Обновите страницу и попробуйте снова!');
         }
 
 
-        function sendMessage() {
-            var messageContent = messageInput.value.trim();
+        function sendMessage(messageContent) {
             if (messageContent && stompClient) {
-                var chatMessage = {
+                const chatMessage = {
                     sender: username,
-                    content: messageInput.value,
+                    dateTime: new Date(),
+                    content: messageContent,
                     type: 'CHAT'
                 };
                 stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-                messageInput.value = '';
             }
         }
 
 
         function onMessageReceived(payload) {
-            var message = JSON.parse(payload.body);
-            console.log("Что же мы получили?")
-            console.log(message);
-            var messageElement = document.createElement('li');
+            const message = JSON.parse(payload.body);
+            const messageElement = document.createElement('li');
 
             if (message.type === 'JOIN') {
                 messageElement.classList.add('event-message');
@@ -94,7 +82,7 @@
                 var avatarElement = document.createElement('i');
                 var avatarText = document.createTextNode(message.sender[0]);
                 avatarElement.appendChild(avatarText);
-                avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                // avatarElement.style['background-color'] = getAvatarColor(message.sender);
 
                 messageElement.appendChild(avatarElement);
 
@@ -113,14 +101,14 @@
         }
 
 
-        function getAvatarColor(messageSender) {
-            var hash = 0;
-            for (var i = 0; i < messageSender.length; i++) {
-                hash = 31 * hash + messageSender.charCodeAt(i);
-            }
-            var index = Math.abs(hash % colors.length);
-            return colors[index];
-        }
+        // function getAvatarColor(messageSender) {
+        //     var hash = 0;
+        //     for (var i = 0; i < messageSender.length; i++) {
+        //         hash = 31 * hash + messageSender.charCodeAt(i);
+        //     }
+        //     var index = Math.abs(hash % colors.length);
+        //     return colors[index];
+        // }
 
     }
 
