@@ -58,7 +58,6 @@
             const promise = MessageService.GetMessages();
             promise.then(response => {
                 const messages = response.data;
-                console.log(messages)
                 if (messages.length === 0) {
                     return;
                 }
@@ -66,13 +65,24 @@
                 messages.forEach(message => {
                     const element = getMessageElement(message);
                     $('.messages-list').append(element);
-                })
+                });
+                const block = document.getElementById("messages");
+                block.scrollTop = block.scrollHeight;
             }).catch(error => FlashService.Error(error))
         }
 
         function initApplication() {
             $('.messages-and-users').css({display: 'flex'});
             $('.controls').css({display: 'flex'});
+
+            $('.new-message').keypress(function (e) {
+                const key = e.which;
+                if (key === 13)  // the enter key code
+                {
+                    $('.send-message').click();
+                    return false;
+                }
+            });
 
             $('.send-message').on('click', function () {
                 let message = $('.new-message').val();
