@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .factory('UserService', UserService);
+        .factory('SocketService', SocketService);
 
     SocketService.$inject = ['$rootScope'];
 
@@ -19,10 +19,7 @@
 
         return service;
 
-        var usernamePage = document.querySelector('#username-page');
-        var chatPage = document.querySelector('#chat-page');
         var messageInput = document.querySelector('#message');
-        var messageArea = document.querySelector('#messageArea');
         var connectingElement = document.querySelector('.connecting');
 
         var stompClient = null;
@@ -33,7 +30,7 @@
             '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
         ];
 
-        function connect(event) {
+        function connect() {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             username = currentUser.username;
 
@@ -43,7 +40,6 @@
 
                 stompClient.connect({}, onConnected, onError);
             }
-            event.preventDefault();
             console.log("Что-то видимо вышло, хз")
         }
 
@@ -57,8 +53,6 @@
                 {},
                 JSON.stringify({sender: username, type: 'JOIN'})
             )
-
-            connectingElement.classList.add('hidden');
         }
 
 
@@ -68,7 +62,7 @@
         }
 
 
-        function sendMessage(event) {
+        function sendMessage() {
             var messageContent = messageInput.value.trim();
             if (messageContent && stompClient) {
                 var chatMessage = {
@@ -79,13 +73,13 @@
                 stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
                 messageInput.value = '';
             }
-            event.preventDefault();
         }
 
 
         function onMessageReceived(payload) {
             var message = JSON.parse(payload.body);
-
+            console.log("Что же мы получили?")
+            console.log(message);
             var messageElement = document.createElement('li');
 
             if (message.type === 'JOIN') {
@@ -116,8 +110,6 @@
 
             messageElement.appendChild(textElement);
 
-            messageArea.appendChild(messageElement);
-            messageArea.scrollTop = messageArea.scrollHeight;
         }
 
 
