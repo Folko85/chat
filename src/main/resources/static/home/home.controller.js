@@ -5,9 +5,9 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['UserService', 'MessageService', 'AuthenticationService', 'FlashService'];
+    HomeController.$inject = ['UserService', 'MessageService', 'SocketService' , 'AuthenticationService', 'FlashService'];
 
-    function HomeController(UserService, MessageService, AuthenticationService, FlashService) {
+    function HomeController(UserService, MessageService, SocketService, AuthenticationService, FlashService) {
         var vm = this;
 
         vm.user = null;
@@ -28,6 +28,7 @@
                 .then(function (user) {
                     vm.user = user;
                 });
+            SocketService.connect()
         }
 
         function logout() {

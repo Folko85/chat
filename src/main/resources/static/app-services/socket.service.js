@@ -21,8 +21,6 @@
 
         var usernamePage = document.querySelector('#username-page');
         var chatPage = document.querySelector('#chat-page');
-        var usernameForm = document.querySelector('#usernameForm');
-        var messageForm = document.querySelector('#messageForm');
         var messageInput = document.querySelector('#message');
         var messageArea = document.querySelector('#messageArea');
         var connectingElement = document.querySelector('.connecting');
@@ -36,18 +34,17 @@
         ];
 
         function connect(event) {
-            username = document.querySelector('#name').value.trim();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            username = currentUser.username;
 
             if (username) {
-                usernamePage.classList.add('hidden');
-                chatPage.classList.remove('hidden');
-
                 var socket = new SockJS('/ws');
                 stompClient = Stomp.over(socket);
 
                 stompClient.connect({}, onConnected, onError);
             }
             event.preventDefault();
+            console.log("Что-то видимо вышло, хз")
         }
 
 
@@ -132,9 +129,6 @@
             var index = Math.abs(hash % colors.length);
             return colors[index];
         }
-
-        usernameForm.addEventListener('submit', connect, true)
-        messageForm.addEventListener('submit', sendMessage, true)
 
     }
 
