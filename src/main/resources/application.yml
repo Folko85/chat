@@ -1,12 +1,16 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5435/chat?user=user&password=secret
-    username: user
-    password: secret
+    url: jdbc:postgresql://pg-321f1ffe-folko85-48e2.aivencloud.com:24161/defaultdb?sslmode=require
+    username: ENC(Oc8Yy7AsLK3v21ntJrqltSE0dFicQn4+)
+    password: ENC(OnNRw7GN2vJttx/4U5E7tc0xvYcxRxPIDthnpQGv3fs=)
   liquibase:
     change-log: /db/changelog/changelog.yml
     enabled: true
   jpa:
     hibernate:
       ddl-auto: validate
+
+jasypt:
+  encryptor:
+    bean: encryptorBean

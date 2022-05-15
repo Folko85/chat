@@ -54,7 +54,6 @@
         }
 
         function updateMessages() {
-            $('.messages-list').html('<i>Сообщений нет</i>');
             const promise = MessageService.GetMessages();
             promise.then(response => {
                 const messages = response.data;
