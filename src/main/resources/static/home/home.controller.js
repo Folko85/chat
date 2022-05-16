@@ -20,7 +20,8 @@
 
         function initController() {
             loadCurrentUser();
-            initApplication()
+            initApplication();
+            loadLastMessages();
         }
 
         function loadCurrentUser() {
@@ -29,7 +30,40 @@
                 .then(user => {
                     vm.user = user;
                 });
-            SocketService.connect(currentUser)
+            SocketService.connect(currentUser);
+        }
+
+        function loadLastMessages() {
+            const promise = MessageService.GetMessages();
+            promise.then(response => {
+                response.data.forEach(message => {
+                    addMessage(message);
+                })
+            }).catch(error => {
+                FlashService.Error(error);
+            })
+        }
+
+        function getMessageElement(message) {
+            let item = $('<div class="message-item"></div>');
+            let header = $('<div class="message-header"></div>');
+            header.append($('<div class="datetime">' +
+                message.dateTime + '</div>'));
+            header.append($('<div class="username">' +
+                message.username + '</div>'));
+            let textElement = $('<div class="message-text"></div>');
+            textElement.text(message.text);
+            item.append(header, textElement);
+            return item;
+        }
+
+        function addMessage(message) {
+            if (message.text) {
+                const element = getMessageElement(message);
+                $('.messages-list').append(element);
+                const block = document.getElementById("messages");
+                block.scrollTop = block.scrollHeight;
+            }
         }
 
         function logout() {
