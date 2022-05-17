@@ -11,16 +11,11 @@
         var service = {};
 
         service.GetMessages = GetMessages;
-        service.AddMessages = AddMessages;
 
         return service;
 
         function GetMessages() {
             return $http.get('/api/messages/all');
-        }
-
-        function AddMessages(message) {
-            return $http.post('/api/messages/add', {message: message});
         }
 
     }
