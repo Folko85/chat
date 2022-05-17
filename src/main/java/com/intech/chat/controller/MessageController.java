@@ -1,6 +1,6 @@
 package com.intech.chat.controller;
 
-import com.intech.chat.dto.response.MessageResponse;
+import com.intech.chat.dto.ChatMessage;
 import com.intech.chat.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,8 +24,8 @@ public class MessageController {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('user:write')")
     @Operation(summary = "Получить все сообщения", security = @SecurityRequirement(name = "jwt"))
-    public List<MessageResponse> getAll() {
-        return messageService.getAll();
+    public List<ChatMessage> getAll() {
+        return messageService.getLast();
     }
 
 }

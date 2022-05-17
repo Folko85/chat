@@ -15,6 +15,7 @@
         service.onError = onError;
         service.sendMessage = sendMessage;
         service.onMessageReceived = onMessageReceived;
+        service.addMessage = addMessage;
 
         return service;
 
@@ -92,7 +93,7 @@
                 $('.messages-list').append(textElement);
                 const block = document.getElementById("messages");
                 block.scrollTop = block.scrollHeight;
-            } else if (message.type === "LEAVE"){
+            } else if (message.type === "LEAVE") {
                 let textElement = $('<div class="username"></div>');
                 textElement.text("Нас покинул " + message.sender);
                 $('.messages-list').append(textElement);

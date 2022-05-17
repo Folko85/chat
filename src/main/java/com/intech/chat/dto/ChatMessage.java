@@ -1,10 +1,12 @@
 package com.intech.chat.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
 @Data
+@Accessors(chain = true)
 public class ChatMessage {
 
     private MessageType type;
