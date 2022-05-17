@@ -1,6 +1,7 @@
 package com.intech.chat.handler;
 
 import com.intech.chat.dto.response.ErrorResponse;
+import com.intech.chat.exception.IncorrectNiknameException;
 import com.intech.chat.exception.UserExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,13 @@ public class ExceptionController {
 
     @ExceptionHandler(UserExistException.class)
     public ResponseEntity<ErrorResponse> handleRegisterUserExistException(UserExistException exc) {
+        ErrorResponse badRequestResponse = new ErrorResponse().setError("invalid_request")
+                .setErrorDescription(exc.getMessage());
+        return new ResponseEntity<>(badRequestResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectNiknameException.class)
+    public ResponseEntity<ErrorResponse> handleIncorrectNicknameException(IncorrectNiknameException exc) {
         ErrorResponse badRequestResponse = new ErrorResponse().setError("invalid_request")
                 .setErrorDescription(exc.getMessage());
         return new ResponseEntity<>(badRequestResponse, HttpStatus.BAD_REQUEST);

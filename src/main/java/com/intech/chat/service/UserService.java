@@ -5,6 +5,7 @@ import com.intech.chat.dto.request.RegisterRequest;
 import com.intech.chat.dto.response.LoginResponse;
 import com.intech.chat.dto.response.ProfileResponse;
 import com.intech.chat.dto.response.SuccessResponse;
+import com.intech.chat.exception.IncorrectNiknameException;
 import com.intech.chat.exception.UserExistException;
 import com.intech.chat.model.User;
 import com.intech.chat.model.enums.Role;
@@ -44,7 +45,10 @@ public class UserService {
         return new SuccessResponse().setMessage("Вы вышли из чата");
     }
 
-    public SuccessResponse register(RegisterRequest registerRequest) throws UserExistException {
+    public SuccessResponse register(RegisterRequest registerRequest) throws UserExistException, IncorrectNiknameException {
+        if (!registerRequest.getUsername().matches("[\\w\\d]+")){
+            throw new IncorrectNiknameException("Никнейм может содержать только буквы и цифры");
+        }
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent())
             throw new UserExistException("Пользователь с таким никнеймом уже есть");
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);

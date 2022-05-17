@@ -5,6 +5,7 @@ import com.intech.chat.dto.request.RegisterRequest;
 import com.intech.chat.dto.response.LoginResponse;
 import com.intech.chat.dto.response.ProfileResponse;
 import com.intech.chat.dto.response.SuccessResponse;
+import com.intech.chat.exception.IncorrectNiknameException;
 import com.intech.chat.exception.UserExistException;
 import com.intech.chat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +32,7 @@ public class UserController {
 
     @PostMapping("/register")
     @Operation(summary = "Регистрация")
-    public SuccessResponse register(@RequestBody RegisterRequest registerRequest) throws UserExistException {
+    public SuccessResponse register(@RequestBody RegisterRequest registerRequest) throws UserExistException, IncorrectNiknameException {
         return userService.register(registerRequest);
     }
 
