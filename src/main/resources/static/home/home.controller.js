@@ -66,7 +66,7 @@
             });
 
             $('.send-message').on('click', function () {
-                let message = $('.new-message').val();
+                let message = $('.new-message').val().trim();
                 SocketService.sendMessage(message)
             });
 
