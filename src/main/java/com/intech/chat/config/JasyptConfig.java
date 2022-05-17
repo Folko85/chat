@@ -1,15 +1,20 @@
 package com.intech.chat.config;
 
+import lombok.AllArgsConstructor;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 @Configuration
+@AllArgsConstructor
 class JasyptConfig {
 
-    private final String password = String.copyValueOf(new char[]{73, 110, 116, 101, 99, 104});
+    private final Environment environment;
+
+    private final String password = environment.getProperty("SECRET");
 
     @Bean(name = "encryptorBean")
     public StringEncryptor stringEncryptor() {
