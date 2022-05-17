@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://pg-321f1ffe-folko85-48e2.aivencloud.com:24161/defaultdb?sslmode=require
-    username: ENC(Oc8Yy7AsLK3v21ntJrqltSE0dFicQn4+)
-    password: ENC(OnNRw7GN2vJttx/4U5E7tc0xvYcxRxPIDthnpQGv3fs=)
+    username: ENC(SjI7Dxp9C1W0nBW43bWLhNvc1tjwr2y9)
+    password: ENC(ThqMVopWFkNAjirs7W7nbp5K9DtXHLz/zkoNNNj8iCM=)
   liquibase:
     change-log: /db/changelog/changelog.yml
     enabled: true
