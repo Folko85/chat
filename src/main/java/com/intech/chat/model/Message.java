@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Accessors(chain = true)
-@Table(name = "message", schema = "public")
+@Table(name = "message_tab")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

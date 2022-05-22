@@ -1,15 +1,16 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://pg-321f1ffe-folko85-48e2.aivencloud.com:24161/defaultdb?sslmode=require
-    username: ENC(SjI7Dxp9C1W0nBW43bWLhNvc1tjwr2y9)
-    password: ENC(ThqMVopWFkNAjirs7W7nbp5K9DtXHLz/zkoNNNj8iCM=)
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:chat.db
   liquibase:
     change-log: /db/changelog/changelog.yml
-    enabled: true
+    enabled: false
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
+    database-platform: com.intech.chat.config.sqlite.SQLiteDialect
+    generate-ddl: true
+    show-sql: false
 
 jasypt:
   encryptor:
