@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "message_tab")
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

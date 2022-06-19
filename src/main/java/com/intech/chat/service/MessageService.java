@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class MessageService {
     private final UserRepository userRepository;
 
     public List<ChatMessage> getLast() {
-        List<Message> messages = messageRepository.findAllByDateTimeAfter(LocalDateTime.now().minusHours(1));
+        List<Message> messages = messageRepository.findLastMessage();
         return messages.stream().map(m -> new ChatMessage().setSender(m.getUser().getUsername()).setContent(m.getText())
                 .setDateTime(m.getDateTime()).setType(ChatMessage.MessageType.CHAT)).collect(Collectors.toList());
     }
